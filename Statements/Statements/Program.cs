@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 
 namespace Statements
 {
@@ -40,7 +41,7 @@ namespace Statements
             double volumeCredits = 0;
             var result = $"Statement for {invoice.CustomerName} \n";
             //string.Format("{0:c}", 112.236677) // $112.23 - defaults to system
-            var format = "{0:C}";
+            var format = "{ 0:C}";
 
             foreach (var perf in invoice.Performances)
             {
@@ -71,7 +72,6 @@ namespace Statements
                 //add volume credits 
                 volumeCredits += Math.Max(perf.Audience - 30, 0);
                 //add extra credit for every ten comedy attendees
-
                 if (PlayTypeEnum.Comedy == play.Type) volumeCredits += Math.Floor(perf.Audience / 5.0);
 
                 //print line for this order
@@ -80,7 +80,6 @@ namespace Statements
             }
 
             result += $"Amount owed is {string.Format(format, totalAmount / 100)} \n";
-            result += $"You earned {volumeCredits} credits \n";
             result += $"You earned {volumeCredits} credits \n";
 
             return result;
