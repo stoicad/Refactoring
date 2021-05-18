@@ -1,0 +1,16 @@
+C:\Users\stoicad\source\repos\Statements\Statements\bin\Debug\net5.0\Statements.exe
+C:\Users\stoicad\source\repos\Statements\Statements\bin\Debug\net5.0\Statements.deps.json
+C:\Users\stoicad\source\repos\Statements\Statements\bin\Debug\net5.0\Statements.runtimeconfig.json
+C:\Users\stoicad\source\repos\Statements\Statements\bin\Debug\net5.0\Statements.runtimeconfig.dev.json
+C:\Users\stoicad\source\repos\Statements\Statements\bin\Debug\net5.0\Statements.dll
+C:\Users\stoicad\source\repos\Statements\Statements\bin\Debug\net5.0\ref\Statements.dll
+C:\Users\stoicad\source\repos\Statements\Statements\bin\Debug\net5.0\Statements.pdb
+C:\Users\stoicad\source\repos\Statements\Statements\obj\Debug\net5.0\Statements.csprojAssemblyReference.cache
+C:\Users\stoicad\source\repos\Statements\Statements\obj\Debug\net5.0\Statements.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\stoicad\source\repos\Statements\Statements\obj\Debug\net5.0\Statements.AssemblyInfoInputs.cache
+C:\Users\stoicad\source\repos\Statements\Statements\obj\Debug\net5.0\Statements.AssemblyInfo.cs
+C:\Users\stoicad\source\repos\Statements\Statements\obj\Debug\net5.0\Statements.csproj.CoreCompileInputs.cache
+C:\Users\stoicad\source\repos\Statements\Statements\obj\Debug\net5.0\Statements.dll
+C:\Users\stoicad\source\repos\Statements\Statements\obj\Debug\net5.0\ref\Statements.dll
+C:\Users\stoicad\source\repos\Statements\Statements\obj\Debug\net5.0\Statements.pdb
+C:\Users\stoicad\source\repos\Statements\Statements\obj\Debug\net5.0\Statements.genruntimeconfig.cache
