@@ -37,52 +37,71 @@ namespace Statements
     {
         public string GetInvoice(Invoice invoice, List<Play> plays)
         {
-            var totalAmount = 0;
-            double volumeCredits = 0;
+            double totalAmount = 0;
             var result = $"Statement for {invoice.CustomerName} \n";
-            //string.Format("{0:c}", 112.236677) // $112.23 - defaults to system
-            var format = "{ 0:C}";
+
+            double volumeCredits = 0;
 
             foreach (var perf in invoice.Performances)
             {
-                var thisAmount = 0;
                 var play = plays.FirstOrDefault(x => x.PlayId == perf.PlayId);
-                switch (play.Type)
-                {
-                    case PlayTypeEnum.Tragedy:
-                        thisAmount = 40000;
-                        if (perf.Audience > 30)
-                        {
-                            thisAmount += 1000 * (perf.Audience - 30);
-                        }
+                double thisAmount = GetAmount(play, perf);
 
-                        break;
-                    case PlayTypeEnum.Comedy:
-                        thisAmount = 30000;
-                        if (perf.Audience > 20)
-                        {
-                            thisAmount += 10000 + 500 * (perf.Audience - 20);
-                        }
-
-                        thisAmount += 300 * perf.Audience;
-                        break;
-                    default: throw new Exception($"Unknown type: {play.Type}");
-                }
-
-                //add volume credits 
-                volumeCredits += Math.Max(perf.Audience - 30, 0);
-                //add extra credit for every ten comedy attendees
-                if (PlayTypeEnum.Comedy == play.Type) volumeCredits += Math.Floor(perf.Audience / 5.0);
+                volumeCredits += CalculateCredits(perf, play);
 
                 //print line for this order
-                result += $"{play.Name}: {string.Format(format, thisAmount / 100.0)} ({perf.Audience} seats) \n";
+                result += GetOrder(play, thisAmount, perf);
                 totalAmount += thisAmount;
             }
 
-            result += $"Amount owed is {string.Format(format, totalAmount / 100)} \n";
+            result += $"Amount owed is {totalAmount / 100:C} \n";
             result += $"You earned {volumeCredits} credits \n";
 
             return result;
+        }
+
+        private static string GetOrder(Play play, double thisAmount, Performance perf)
+        {
+            return $"{play.Name}: {thisAmount / 100.0:C} ({perf.Audience} seats) \n";
+        }
+
+        private static double CalculateCredits( Performance perf, Play play)
+        {
+            double volumeCredits = 0;
+            //add volume credits 
+            volumeCredits += Math.Max(perf.Audience - 30, 0);
+            //add extra credit for every ten comedy attendees
+            if (PlayTypeEnum.Comedy == play.Type) volumeCredits += Math.Floor(perf.Audience / 5.0);
+            return volumeCredits;
+        }
+
+        private static double GetAmount(Play play, Performance perf)
+        {
+            double thisAmount;
+            switch (play.Type)
+            {
+                case PlayTypeEnum.Tragedy:
+                    thisAmount = GetAmount(perf,40000, 30, 1000, 0, 0);
+                    break;
+                case PlayTypeEnum.Comedy:
+                    thisAmount = GetAmount(perf, 30000, 20, 500, 10000, 300);
+                    break;
+                default: throw new Exception($"Unknown type: {play.Type}");
+            }
+
+            return thisAmount;
+        }
+
+        private static double GetAmount(Performance perf, double initialValue, double audienceSize, int multiplier, int adjustmentRate, int noAudienceRate)
+        {
+            double thisAmount = initialValue;
+            if (perf.Audience > audienceSize)
+            {
+                thisAmount += adjustmentRate + multiplier * (perf.Audience - audienceSize);
+            }
+
+            thisAmount += noAudienceRate * perf.Audience;
+            return thisAmount;
         }
     }
 
